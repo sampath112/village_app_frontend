@@ -108,6 +108,7 @@
 
 // src/components/Dashboard.js
 import { useState } from 'react';
+import * as XLSX from 'xlsx';
 import ProfileCard from './ProfileCard';
 
 function Dashboard() {
@@ -124,6 +125,22 @@ function Dashboard() {
     'Below 10th', '10th Pass', 'Intermediate', 'TTC', 'ITI', 'ITI+Apprenticeship',
     'Diploma', 'B.Tech', 'B.Sc', 'B.Com', 'B.Ed', 'Other Degree', 'MA', 'M.Com', 'M.Tech'
   ];
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this profile?')) {
+      try {
+        // Filter out the profile with the given ID
+        const updatedProfiles = profiles.filter((profile) => profile._id !== id);
+        // Update state and localStorage
+        setProfiles(updatedProfiles);
+        localStorage.setItem('profiles', JSON.stringify(updatedProfiles));
+        alert('Profile deleted successfully!');
+      } catch (err) {
+        console.error('Error deleting profile:', err);
+        alert('Error deleting profile');
+      }
+    }
+  };
 
   const filteredProfiles = profiles
     .filter((profile) => {
@@ -157,6 +174,19 @@ function Dashboard() {
     }
   };
 
+  const downloadExcel = () => {
+    try {
+      const worksheet = XLSX.utils.json_to_sheet(profiles);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Profiles');
+      XLSX.writeFile(workbook, 'Chinnabondapalli_Profiles.xlsx');
+      alert('Profiles exported successfully!');
+    } catch (err) {
+      console.error('Error exporting Excel:', err);
+      alert('Error exporting profiles');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-neutral py-8 sm:py-12 lg:py-16">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -164,14 +194,21 @@ function Dashboard() {
           Chinnabondapalli Youth Dashboard
         </h2>
 
-        {/* <div className="mb-4 text-center">
+        <div className="mb-4 text-center">
+         
           <button
+            onClick={downloadExcel}
+            className="bg-accent text-white px-4 py-2 rounded-lg hover:bg-green-500 transition-all mr-4"
+          >
+            Export to Excel
+          </button>
+          {/* <button
             onClick={clearData}
             className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
           >
             Clear All Profiles
-          </button>
-        </div> */}
+          </button> */}
+        </div>
 
         <div className="bg-white rounded-xl shadow-md p-6 mb-8 animate-slide-up">
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-between">
@@ -224,7 +261,7 @@ function Dashboard() {
             </p>
           ) : (
             filteredProfiles.map((profile) => (
-              <ProfileCard key={profile._id} profile={profile} />
+              <ProfileCard key={profile._id} profile={profile} onDelete={handleDelete} />
             ))
           )}
         </div>
