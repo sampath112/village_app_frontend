@@ -28,7 +28,7 @@
 // export default ProfileCard;
 
 // src/components/ProfileCard.js
-function ProfileCard({ profile }) {
+function ProfileCard({ profile, onDelete }) {
   return (
     <div className="bg-white rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg animate-slide-up">
       <h3 className="text-xl font-bold text-primary mb-2">{profile.name}</h3>
@@ -51,6 +51,14 @@ function ProfileCard({ profile }) {
           </span>
         </p>
       </div>
+
+      {/* Delete Button */}
+      <button
+        onClick={onDelete}
+        className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
+      >
+        Delete Profile
+      </button>
     </div>
   );
 }

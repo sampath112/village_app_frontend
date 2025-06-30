@@ -39,6 +39,19 @@ function Dashboard() {
     setProfiles(profiles.filter(profile => profile._id !== id));
   };
 
+  // Real DELETE handler
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this profile?')) return;
+
+    try {
+      await axios.delete(`/api/profiles/${id}`);
+      setProfiles(profiles.filter(profile => profile._id !== id));
+    } catch (err) {
+      console.error('Error deleting profile:', err);
+      alert('Failed to delete profile');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-neutral py-8 sm:py-12 lg:py-16">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -103,7 +116,7 @@ function Dashboard() {
               <ProfileCard
                 key={profile._id}
                 profile={profile}
-                onDelete={() => handleFakeDelete(profile._id)}
+                onDelete={() => handleDelete(profile._id)}
               />
             ))
           )}
