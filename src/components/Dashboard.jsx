@@ -21,7 +21,7 @@ function Dashboard() {
 
   const fetchProfiles = async () => {
     try {
-      const res = await axios.get('https://app-backend-apho.onrender.com/api/profiles', {
+      const res = await axios.get('https://app-backend-apho.onrender.com/api/profiles ', {
         params: filters,
       });
       setProfiles(res.data);
@@ -32,6 +32,11 @@ function Dashboard() {
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
+  };
+
+  // Function to "remove" profile from UI
+  const handleFakeDelete = (id) => {
+    setProfiles(profiles.filter(profile => profile._id !== id));
   };
 
   return (
@@ -95,7 +100,11 @@ function Dashboard() {
             </p>
           ) : (
             profiles.map((profile) => (
-              <ProfileCard key={profile._id} profile={profile} />
+              <ProfileCard
+                key={profile._id}
+                profile={profile}
+                onDelete={() => handleFakeDelete(profile._id)}
+              />
             ))
           )}
         </div>
