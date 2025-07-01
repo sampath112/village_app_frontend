@@ -49,7 +49,7 @@ function Dashboard() {
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text mb-8 text-center animate-fade-in">
-          Chinnabondapalli Youth Dashboard
+          Chinabondapalli Youth Dashboard
         </h2>
 
         {/* Filters */}
