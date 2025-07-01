@@ -70,7 +70,7 @@ const handleSubmit = async (e) => {
               Mana Chinnabondapalli is a simple app for the youth of Chinnabondapalli village to share their details like name, date of birth, education, and job status. It helps us understand who is unemployed and connect them to job opportunities through village alumni. The app is easy to use and designed for young people. Admins can view and filter data to plan job references.
             </p>
             <p className="text-gray-600 text-sm sm:text-base">
-              మన చిన్నబొందపల్లి అనేది చిన్నబొందపల్లి గ్రామ యువత కోసం ఒక సరళమైన యాప్, ఇక్కడ వారు తమ పేరు, పుట్టిన తేదీ, విద్య, మరియు ఉద్యోగ స్థితిని పంచుకోవచ్చు. ఇది ఉద్యోగం లేని వారిని గుర్తించి, గ్రామ పూర్వ విద్యార్థుల ద్వారా ఉద్యోగ అవకాశాలను అందించడానికి సహాయపడుతుంది. ఈ యాప్ ఉపయోగించడానికి సులభం మరియు యువత కోసం రూపొందించబడింది. అడ్మిన్‌లు డేటాను చూసి, ఫిల్టర్ చేసి, ఉద్యోగ రిఫరెన్స్‌లను ప్లాన్ చేయవచ్చు.
+              మన చిన్నబొండపల్లి అనేది చిన్నబొండపల్లి గ్రామ యువత కోసం ఒక సరళమైన యాప్, ఇక్కడ వారు తమ పేరు, పుట్టిన తేదీ, విద్య, మరియు ఉద్యోగ స్థితిని పంచుకోవచ్చు. ఇది ఉద్యోగం లేని వారిని గుర్తించి, గ్రామ పూర్వ విద్యార్థుల ద్వారా ఉద్యోగ అవకాశాలను అందించడానికి సహాయపడుతుంది. ఈ యాప్ ఉపయోగించడానికి సులభం మరియు యువత కోసం రూపొందించబడింది. అడ్మిన్‌లు డేటాను చూసి, ఫిల్టర్ చేసి, ఉద్యోగ రిఫరెన్స్‌లను ప్లాన్ చేయవచ్చు.
             </p>
           </div>
 
