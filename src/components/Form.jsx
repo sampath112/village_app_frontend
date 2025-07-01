@@ -44,7 +44,7 @@ function Form() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Join Mana Chinnabondapalli
+          Join Mana Chinabondapalli
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
