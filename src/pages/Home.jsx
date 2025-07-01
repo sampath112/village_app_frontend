@@ -24,7 +24,7 @@ function Home() {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    await axios.post('http://localhost:8000/api/profiles', formData);
+    await axios.post('https://app-backend-apho.onrender.com/api/profiles', formData);
     alert('Profile submitted successfully!');
     setFormData({
       name: '',

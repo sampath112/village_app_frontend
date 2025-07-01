@@ -24,7 +24,7 @@ function Dashboard() {
 
   const fetchProfiles = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/profiles', {
+      const res = await axios.get('https://app-backend-apho.onrender.com/api/profiles', {
         params: filters,
         headers: {
           'x-auth-token': token // Add the token to the request headers
