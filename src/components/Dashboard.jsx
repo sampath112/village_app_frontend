@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ProfileCard from './ProfileCard';
+import { useAuth } from '../context/AuthContext'; // Add this import with correct path
 
 function Dashboard() {
   const [profiles, setProfiles] = useState([]);
@@ -14,42 +15,33 @@ function Dashboard() {
     'Below 10th', '10th Pass', 'Intermediate', 'TTC', 'ITI', 'ITI+Apprenticeship',
     'Diploma', 'B.Tech', 'B.Sc', 'B.Com', 'B.Ed', 'Other Degree', 'MA', 'M.Com', 'M.Tech'
   ];
-
+  const { token } = useAuth();  
   useEffect(() => {
-    fetchProfiles();
-  }, [filters]);
+    if (token) {  // Only fetch if token exists
+      fetchProfiles();
+    }
+  }, [filters, token]);
 
   const fetchProfiles = async () => {
     try {
-      const res = await axios.get('https://app-backend-apho.onrender.com/api/profiles ', {
+      const res = await axios.get('http://localhost:8000/api/profiles', {
         params: filters,
+        headers: {
+          'x-auth-token': token // Add the token to the request headers
+        }
       });
       setProfiles(res.data);
     } catch (err) {
       console.error('Error fetching profiles:', err);
+      if (err.response?.status === 401) {
+        // Handle unauthorized error - could redirect to login or show message
+        alert('Please login again');
+      }
     }
   };
 
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
-  };
-
-  // Function to "remove" profile from UI
-  const handleFakeDelete = (id) => {
-    setProfiles(profiles.filter(profile => profile._id !== id));
-  };
-
-  // Real DELETE handler
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this profile?')) return;
-
-    try {
-      await axios.delete(`/api/profiles/${id}`);
-      setProfiles(profiles.filter(profile => profile._id !== id));
-    } catch (err) {
-      console.error('Error deleting profile:', err);
-      alert('Failed to delete profile');
-    }
   };
 
   return (
@@ -113,11 +105,7 @@ function Dashboard() {
             </p>
           ) : (
             profiles.map((profile) => (
-              <ProfileCard
-                key={profile._id}
-                profile={profile}
-                onDelete={() => handleDelete(profile._id)}
-              />
+              <ProfileCard key={profile._id} profile={profile} />
             ))
           )}
         </div>

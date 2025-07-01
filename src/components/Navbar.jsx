@@ -1,73 +1,82 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { useAuth } from '../context/AuthContext';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
     <nav className="bg-white text-text fixed w-full top-0 z-50 shadow-md">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-2xl sm:text-3xl font-bold text-primary hover:text-accent transition-all duration-300"
-        >
+        <Link to="/" className="text-2xl sm:text-3xl font-bold text-primary">
           Mana Chinnabondapalli
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8">
-          <Link
-            to="/"
-            className="text-lg font-medium text-text hover:text-primary hover:scale-105 transition-all duration-300"
-          >
+          <Link to="/" className="text-lg font-medium text-text hover:text-primary">
             Home
           </Link>
-          <Link
-            to="/dashboard"
-            className="text-lg font-medium text-text hover:text-primary hover:scale-105 transition-all duration-300"
-          >
-            Dashboard
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link to="/dashboard" className="text-lg font-medium text-text hover:text-primary">
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-lg font-medium text-text hover:text-primary"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/admin" className="text-lg font-medium text-text hover:text-primary">
+              Admin Login
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-2xl text-text focus:outline-none hover:text-primary transition-colors duration-300"
-          onClick={toggleMenu}
-        >
-          {isOpen ? <FaTimes /> : <FaBars />}
-        </button>
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={`md:hidden bg-white text-text absolute top-full left-0 w-full shadow-md transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-        }`}
-      >
-        <div className="flex flex-col items-center py-4 space-y-4">
-          <Link
-            to="/"
-            className="text-lg font-medium hover:text-primary hover:scale-105 transition-all duration-300"
-            onClick={toggleMenu}
-          >
+      {isOpen && (
+        <div className="md:hidden bg-white py-4 px-4">
+          <Link to="/" className="block py-2 text-text hover:text-primary">
             Home
           </Link>
-          <Link
-            to="/dashboard"
-            className="text-lg font-medium hover:text-primary hover:scale-105 transition-all duration-300"
-            onClick={toggleMenu}
-          >
-            Dashboard
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link to="/dashboard" className="block py-2 text-text hover:text-primary">
+                Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="block w-full text-left py-2 text-text hover:text-primary"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link to="/admin" className="block py-2 text-text hover:text-primary">
+              Admin Login
+            </Link>
+          )}
         </div>
-      </div>
+      )}
     </nav>
   );
 }

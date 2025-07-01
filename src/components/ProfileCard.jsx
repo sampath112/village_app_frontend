@@ -51,10 +51,8 @@ function ProfileCard({ profile, onDelete }) {
           </span>
         </p>
       </div>
-
-      {/* Delete Button */}
       <button
-        onClick={onDelete}
+        onClick={() => onDelete(profile._id)}
         className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
       >
         Delete Profile

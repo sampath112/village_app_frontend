@@ -18,27 +18,29 @@ function Home() {
     'Diploma', 'B.Tech', 'B.Sc', 'B.Com', 'B.Ed', 'Other Degree', 'MA', 'M.Com', 'M.Tech'
   ];
 
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('https://app-backend-apho.onrender.com/api/profiles', formData);
-      alert('Profile submitted successfully!');
-      setFormData({
-        name: '',
-        dob: '',
-        email: '',
-        phone: '',
-        qualification: '',
-        branch: '',
-        employmentStatus: '',
-      });
-      navigate('/dashboard');
-    } catch (err) {
-      alert('Error submitting profile');
-    }
-  };
+
+  // In the handleSubmit function, remove the navigate('/dashboard') line:
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    await axios.post('http://localhost:8000/api/profiles', formData);
+    alert('Profile submitted successfully!');
+    setFormData({
+      name: '',
+      dob: '',
+      email: '',
+      phone: '',
+      qualification: '',
+      branch: '',
+      employmentStatus: '',
+    });
+    // Remove this line:
+    // navigate('/dashboard');
+  } catch (err) {
+    alert('Error submitting profile');
+  }
+};
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
